@@ -1,12 +1,15 @@
 package com.example.demo.Service.Implement;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.example.demo.DTO.CategoryDTO;
+import com.example.demo.DTO.ImageDTO;
 import com.example.demo.DTO.ProductDTO;
 import com.example.demo.DTO.ResponseDTO.BaseResponse;
 import com.example.demo.Entity.CategoryEntity;
+import com.example.demo.Entity.ImageEntity;
 import com.example.demo.Entity.ProductEntity;
 import com.example.demo.Repository.CategoryRepository;
 import com.example.demo.Repository.ProductRepository;
@@ -58,9 +61,17 @@ public class CategoryService implements ICategoryService{
     try {
       CategoryEntity categoryEntity = categoryRepository.findById(categoryId).get();
       List<ProductEntity> productEntities = categoryEntity.getProductEntities();
-      Type listType = new TypeToken<List<ProductDTO>>() {
-      }.getType();
-      List<ProductDTO> productDTOs = mapper.map(productEntities, listType);
+      List<ProductDTO> productDTOs = new ArrayList<>();
+      for (ProductEntity productEntity : productEntities) {
+        List<ImageEntity> imageEntities = productEntity.getImageEntities();
+        Type listTypeImage = new TypeToken<List<ImageDTO>>() {
+        }.getType();
+        List<ImageDTO> imageDTOs = mapper.map(imageEntities, listTypeImage);
+        ProductDTO productDTO = mapper.map(productEntity, ProductDTO.class);
+        productDTO.setImageDTOs(imageDTOs);
+        productDTOs.add(productDTO);
+      }
+      
       return productDTOs;
     } catch (Exception e) {
       System.err.println(e.getMessage());

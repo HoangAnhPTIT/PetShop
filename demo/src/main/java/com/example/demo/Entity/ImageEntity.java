@@ -9,8 +9,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -26,7 +24,6 @@ public class ImageEntity {
 	@Column(name = "url", columnDefinition="TEXT")
 	private String url;
 
-	@JsonManagedReference("imageEntities")
 	@ManyToOne
 	@JoinColumn(name = "product_id")
 	private ProductEntity productEntity;

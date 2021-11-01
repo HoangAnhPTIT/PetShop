@@ -1,6 +1,7 @@
 package com.example.demo.Entity;
 
-import java.util.Set;
+
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -53,11 +54,11 @@ public class UserEntity {
   private Long point;
 
   @ManyToMany(mappedBy = "roleUsers")
-  private Set<RoleEntity> userRoles;
+  private List<RoleEntity> userRoles;
 
   @OneToMany(mappedBy = "userEntity")
-  private Set<CartEntity> cartEntities;
+  private List<CartEntity> cartEntities;
 
   @OneToMany(mappedBy = "userEntity")
-  private Set<UserVoucher> userVouchers;
+  private List<UserVoucher> userVouchers;
 }
